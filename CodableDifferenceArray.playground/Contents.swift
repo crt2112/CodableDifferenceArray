@@ -84,6 +84,23 @@ struct Drinks: Decodable {
     }
 }
 
+struct CommonItem<T: Codable>: Codable {
+    var commonStrField: String
+    var commonIntField: Int
+    var someField: T?
+}
+
+struct SomeItem1: Codable {
+    var some1FieldStr: String
+}
+
+struct SomeItem2: Codable {
+    var some2FieldStr: String
+    var some2FieldsoInt: Int
+    var some2FieledInt2: Int
+}
+
+
 let jsonDecoder = JSONDecoder()
 do {
     let results = try jsonDecoder.decode(Drinks.self, from:drinks.data(using: .utf8)!)
@@ -93,6 +110,14 @@ do {
             print(beer.alcohol_content)
         }
     }
+    // おまけ: 一部のフィールドの型が違う Struct の定義
+    /*
+    var someItem1: CommonItem<SomeItem1>
+    var someItem2: CommonItem<SomeItem2>
+    someItem1.someField?.some1FieldStr
+    someItem2.someField?.some2FieldStr
+    */
+    
 } catch {
     print("caught: \(error)")
 }
